@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>โหลด CSV จาก GitHub</title>
+</head>
+<body>
+  <h1>กำลังโหลดข้อมูล...</h1>
+  <script>
+    fetch('https://raw.githubusercontent.com/ThanadonMethawee/filez/main/GPA_1_2568.csv')
+      .then(res => res.text())
+      .then(csv => {
+        const rows = csv.trim().split('\n');
+        rows.splice(0, 2);
+
+        const data = rows.map(row => {
+          const cols = row.split(',');
+          return {
+            id: cols[0].trim(),
+            name: cols[1]?.split('.')[1] || '',
+            lastname: cols[2] || '',
+            midterm: cols[7] || '',
+            final: cols[12] || ''
+          };
+        });
+
+        console.log('ข้อมูลนักเรียนทั้งหมด:', data);
+        document.body.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+      })
+      .catch(err => {
+        console.error('เกิดข้อผิดพลาดในการโหลดไฟล์:', err);
+      });
+  </script>
+</body>
+</html>
