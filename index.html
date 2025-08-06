@@ -10,6 +10,13 @@
   <button onclick="uploadCSV()">Upload</button>
 
   <script>
+    fetch('https://script.google.com/macros/s/AKfycbyuTHC_HM4esC8V_CiBVqd6GHFT2M5VbP3Q6GF9F1j9IEup5V5Xl4ToY1gDvhJ_uu9BJQ/exec')
+  .then(res => res.text())
+  .then(csv => {
+    const rows = csv.split('\n').map(row => row.split(','));
+    console.log(rows);
+  });
+    
     async function uploadCSV() {
       const fileInput = document.getElementById('csvFile');
       const file = fileInput.files[0];
